@@ -1,0 +1,10 @@
+GitHub Repo (Markdown + Solidity source)
+        |
+        v
+Hardhat (compile, test, deploy)
+        |
+        v
+Blockchain (Ethereum/Sepolia)
+        |
+        v
+DAO_IDENTIFIER.md (contract address inscribed back in GitHub)
