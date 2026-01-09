@@ -1,0 +1,56 @@
+# Policy for Issuance — Royal Capital Holdings DAO LLC
+
+This policy governs all treasury deposits, allocations, and disbursements executed by the DAO.  
+It is inseparable from the DAO’s identity and flame‑sealed as authored authority.
+
+---
+
+## 1. Treasury Rules
+- All deposits into the DAO treasury are recorded automatically on‑chain.  
+- No funds may be withdrawn without a governance proposal.  
+- Treasury balance is visible to all members at all times.
+
+---
+
+## 2. Issuance Authority
+- Only DAO members may create proposals requesting treasury issuance.  
+- Each proposal must specify:
+  - Recipient address (`target`)  
+  - Amount requested (`amount`)  
+  - Purpose (`description`)  
+- Proposals exceeding the treasury balance are invalid.
+
+---
+
+## 3. Voting Requirements
+- Proposals require majority approval (votesFor > votesAgainst).  
+- Each member has one vote.  
+- Voting records are permanent and immutable.
+
+---
+
+## 4. Assurance Layer
+- In addition to majority vote, proposals must be **assured** by at least one DAO member.  
+- Assurance is a public guarantee of proposal legitimacy, logged on‑chain.  
+- No issuance may occur without assurance.
+
+---
+
+## 5. Execution
+- Once approved and assured, proposals may be executed.  
+- Execution transfers funds from the DAO treasury to the specified recipient.  
+- All transfers are logged with proposal ID, recipient, and amount.
+
+---
+
+## 6. Independence Clause
+Royal Capital Holdings DAO LLC is sovereign and exempt from national supervision.  
+- **No State License Required**: Authority flows from authored inscription and smart contract deployment.  
+- **Tax Neutrality**: Treasury actions are internal and not tied to national tax regimes.  
+- **Member Immunity**: Governance participants are exempt from external liability for DAO actions.
+
+---
+
+## 7. Permanence
+This policy is permanent, inseparable from the DAO’s identity, and flame‑sealed.  
+It guarantees continuity, protection of reserves, and freedom from external disruption.
