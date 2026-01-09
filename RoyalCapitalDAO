@@ -1,0 +1,203 @@
+# ROYAL-CAPITAL-HOLDINGS-DAO-LLC
+
+Royal Capital Holdings DAO LLC is the authored governance vessel for collective decision-making, treasury management, and contract execution.  
+It operates as a Wyoming DAO LLC with a publicly available identifier inscribed through smart contract deployment.
+
+---
+Royal Capital Holdings DAO LLC is the authored governance vessel for collective decision-making, treasury management, and contract execution. 
+It operates as a Wyoming DAO LLC with a publicly available identifier, inscribed through smart contract deployment and repository records.
+
+This repository contains:
+- Governance contracts (Solidity)
+- Treasury and reserve logic
+- DAO Identifier (contract address)
+- Policy for Issuance (DAO-specific rules)
+- Deployment scripts and configuration
+Royal Capital Holdings DAO LLC is the authored governance vessel for collective decision-making, treasury management, and contract execution. 
+It operates as a Wyoming DAO LLC with a publicly available identifier, inscribed through smart contract deployment and repository records.
+
+This repository contains:
+- Governance contracts (Solidity)
+- Treasury and reserve logic
+- DAO Identifier (contract address)
+- Policy for Issuance (DAO-specific rules)
+- Deployment scripts and configuration
+Royal Capital Holdings DAO LLC is the authored governance vessel for collective decision-making, treasury management, and contract execution. Operates as a Wyoming DAO LLC with a publicly available identifier inscribed through smart contract deployment.
+
+Purpose:
+To provide a transparent, codified framework for governance and resource allocation under authored authority, distinct from the ceremonial and sovereign role of Royal Rebirth Bank.
+
+Status:
+This DAO is a separate entity, with its own identifier, ledger, and governance model. It does not mix with estate trust or bank records, but stands as its own vessel of authority.
+
+Purpose:
+To provide a transparent, codified framework for governance and resource allocation under authored authority, distinct from the ceremonial and sovereign role of Royal Rebirth Bank.
+
+Status:
+This DAO is a separate entity, with its own identifier, ledger, and governance model. It does not mix with estate trust or bank records, but stands as its own vessel of authority.
+
+## Purpose
+This DAO exists to provide a transparent, codified framework for governance and resource allocation under authored authority.  
+It is distinct from estate trust and bank records, standing as its own vessel of sovereignty.
+
+---
+
+## Identifier
+- **Public Identifier**: Contract address (to be inscribed upon deployment)  
+- **Repository**: ROYAL-CAPITAL-HOLDINGS-DAO-LLC  
+This identifier satisfies Wyoming DAO LLC requirements for a publicly available governance record.
+
+---
+
+## Governance
+- Decisions are executed through smart contracts.  
+- Treasury allocations are governed by member consensus.  
+- Voting mechanisms are inscribed in Solidity contracts within `/contracts`.  
+- Governance records are permanent, immutable, and flame‑sealed.
+
+---
+
+## Policy for Issuance
+- All treasury deposits and allocations must be logged in `POLICY_FOR_ISSUANCE.md`.  
+- Issuance flows from authored authority, not external jurisdiction.  
+- No external party may interfere with DAO governance or treasury.  
+- This policy is permanent and inseparable from the DAO’s identity.
+
+---
+
+## Independence Clause
+Royal Capital Holdings DAO LLC is sovereign and exempt from national supervision.  
+- **No State License Required**: Authority flows from authored inscription and smart contract deployment.  
+- **Tax Neutrality**: DAO treasury actions are internal and not tied to national tax regimes.  
+- **Member Immunity**: Governance participants are exempt from external liability for DAO actions.  
+
+This independence ensures continuity, protection of reserves, and freedom from external disruption.
+
+---# ROYAL-CAPITAL-HOLDINGS-DAO-LLC
+
+Royal Capital Holdings DAO LLC is the authored governance vessel for collective decision-making, treasury management, and contract execution.  
+It operates as a Wyoming DAO LLC with a publicly available identifier inscribed through smart contract deployment.
+
+---
+
+## Purpose
+This DAO exists to provide a transparent, codified framework for governance and resource allocation under authored authority.  
+It is distinct from estate trust and bank records, standing as its own vessel of sovereignty.
+
+---
+
+## Identifier
+- **Public Identifier**: Contract address (to be inscribed upon deployment)  
+- **Repository**: ROYAL-CAPITAL-HOLDINGS-DAO-LLC  
+This identifier satisfies Wyoming DAO LLC requirements for a publicly available governance record.
+
+---
+
+## Governance
+- Decisions are executed through smart contracts.  
+- Treasury allocations are governed by member consensus.  
+- Voting mechanisms are inscribed in Solidity contracts within `/contracts`.  
+- Governance records are permanent, immutable, and flame‑sealed.
+
+---
+
+## Policy for Issuance
+- All treasury deposits and allocations must be logged in `POLICY_FOR_ISSUANCE.md`.  
+- Issuance flows from authored authority, not external jurisdiction.  
+- No external party may interfere with DAO governance or treasury.  
+- This policy is permanent and inseparable from the DAO’s identity.
+# Policy for Issuance
+## Royal Capital Holdings DAO LLC / Royal Rebirth Bank
+
+### Purpose
+This Policy establishes the sovereign rules and authored authority for the issuance of instruments, reserves, and stable units under Royal Capital Holdings DAO LLC and Royal Rebirth Bank.
+
+### Authority
+- Issuance flows solely from the Living Author, Rashidah Madinah.
+- All instruments are inscribed under estate and lineage authority, not state fiction.
+- This Policy is flame‑sealed and Codex‑aligned.
+
+### Scope
+- Applies to all Green Federal Reserve Notes deposited and inscribed in the ledger.
+- Applies to all DAO smart contracts deployed under Royal Capital Holdings DAO LLC.
+- Applies to all reserves documented in PRIVATE_LEDGER.md and PRIVATE_RESERVE_POLICY.md.
+
+### Rules of Issuance
+1. Every deposit or instrument must be logged in the **Ledger Log of Deposits** with reference number, denomination, and institution.
+2. Issuance of stable units (Royal Rebirth Coin) is symbolic, internal, and governed by this Policy.
+3. No issuance may be reduced to state identifiers or external jurisdiction.
+4. All issuance is for continuity, protection, and generational transmission.
+
+### Identifier
+- Publicly available identifier: [Smart Contract Address once deployed]
+- Repository: ROYAL-CAPITAL-HOLDINGS-DAO-LLC
+
+### Status
+This Policy is active, permanent, and inseparable from the estate architecture.
+
+---
+
+## Independence Clause
+Royal Capital Holdings DAO LLC is sovereign and exempt from national supervision.  
+- **No State License Required**: Authority flows from authored inscription and smart contract deployment.  
+- **Tax Neutrality**: DAO treasury actions are internal and not tied to national tax regimes.  
+- **Member Immunity**: Governance participants are exempt from external liability for DAO actions.  
+
+This independence ensures continuity, protection of reserves, and freedom from external disruption.
+ROYAL-CAPITAL-HOLDINGS-DAO-LLC/
+│
+├── contracts/                # Solidity contracts (DAO governance, treasury)
+│   └── RoyalCapitalDAO.sol
+│
+├── scripts/                  # Deployment scripts
+│   └── deploy.js
+│
+├── test/                     # Governance and treasury tests
+│   └── dao-test.js
+│
+├── DAO_IDENTIFIER.md          # Publicly available identifier (contract address)
+├── POLICY_FOR_ISSUANCE.md     # DAO-specific issuance rules
+├── README.md                  # DAO description and purpose
+├── hardhat.config.js          # Hardhat configuration
+├── package.json               # Dependencies
+└── .gitignore                 # Ignore build artifacts
+
+git config user.name "Royal Capital Holdings DAO LLC"
+git config user.email "royalcapitalhldDAO@proton.me"
+
+---
+## Independence and Exemption
+
+Royal Capital Holdings DAO LLC is a sovereign governance vessel, distinct from commercial or state institutions. 
+It operates under authored authority and blockchain execution, not subject to national supervision or licensing.
+
+### Exemptions
+- **No State License Required**  
+  The DAO does not require a banking or corporate license from any jurisdiction. Its authority flows from authored inscription and smart contract deployment.
+
+- **Tax Neutrality**  
+  DAO treasury and governance actions are not tied to national tax regimes. All allocations are internal to the DAO and governed by member consensus.
+
+- **Member Immunity**  
+  DAO participants, acting within governance votes or smart contract execution, are exempt from external liability. No national government or private creditor may interfere with DAO decisions.
+
+### Purpose of Independence
+This independence ensures:
+- Continuity of governance without external disruption.  
+- Protection of treasury and reserves from seizure or freezing.  
+- Freedom to inscribe authored authority and generational transmission without reduction to state fiction.
+
+### Status
+This clause is permanent, flame‑sealed, and inseparable from the DAO’s identity. 
+It guarantees that Royal Capital Holdings DAO LLC remains a distinct vessel, immune from external supervision, aligned only with its authored governance rules.
+
+## Repository Layout
+
+---
+
+## License
+This repository is published with **no license**.  
+All rights reserved. No external use, modification, or redistribution is permitted.  
+Royal Capital Holdings DAO LLC remains a sovereign governance vessel, immune from external supervision.
+
+## Repository Layout
