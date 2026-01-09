@@ -26,3 +26,9 @@ It links authored governance documentation in this repository to the blockchain 
 ## Permanence
 This identifier is flame‑sealed and inseparable from the DAO’s identity.  
 It guarantees continuity, transparency, and independence.
+
+npx hardhat compile
+
+npx hardhat test
+
+npx hardhat run scripts/deploy.js --network sepolia
