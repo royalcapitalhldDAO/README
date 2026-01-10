@@ -1,0 +1,220 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+/// @title Royal Capital Holdings DAO Smart Contract
+/// @notice Governance contract aligned with Operating Agreement
+/// @dev Educational template for DAO LLC compliance
+
+contract RoyalCapitalHoldingsDAO {
+    // ------------------------------
+    // Core Governance Anchors
+    // ------------------------------
+    address public managerEntity;      // Royal Capital Holdings LLC
+    address public beneficiary;        // Royal International Ministry
+    uint256 public treasuryBalance;
+
+    mapping(address => uint256) public memberShares;
+
+    // ------------------------------
+    // Events
+    // ------------------------------
+    event Deposit(address indexed from, uint256 amount);
+    event ProposalCreated(uint256 proposalId, string description);
+    event Voted(uint256 proposalId, address indexed voter, bool support);
+    event Executed(uint256 proposalId);
+
+    // ------------------------------
+    // Constructor
+    // ------------------------------
+    constructor(address _managerEntity, address _beneficiary) {
+        managerEntity = _managerEntity;   // Royal Capital Holdings LLC
+        beneficiary = _beneficiary;       // Royal International Ministry
+    }
+
+    // ------------------------------
+    // Treasury Functions
+    // ------------------------------
+    function deposit() external payable {
+        treasuryBalance += msg.value;
+        emit Deposit(msg.sender, msg.value);
+    }
+
+    function allocateToBeneficiary(uint256 amount) external {
+        require(msg.sender == managerEntity, "Only Manager Entity can allocate");
+        require(amount <= treasuryBalance, "Insufficient balance");
+        treasuryBalance -= amount;
+        payable(beneficiary).transfer(amount);
+    }
+
+    // ------------------------------
+    // Governance Functions
+    // ------------------------------
+    struct Proposal {
+        uint256 id;
+        string description;
+        uint256 votesFor;
+        uint256 votesAgainst;
+        bool executed;
+    }
+
+    mapping(uint256 => Proposal) public proposals;
+    uint256 public nextProposalId;
+
+    function createProposal(string memory description) external {
+        proposals[nextProposalId] = Proposal({
+            id: nextProposalId,
+            description: description,
+            votesFor: 0,
+            votesAgainst: 0,
+            executed: false
+        });
+        emit ProposalCreated(nextProposalId, description);
+        nextProposalId++;
+    }
+
+    function vote(uint256 proposalId, bool support) external {
+        require(memberShares[msg.sender] > 0, "Not a member");
+        Proposal storage proposal = proposals[proposalId];
+        require(!proposal.executed, "Already executed");
+
+        if (support) {
+            proposal.votesFor += memberShares[msg.sender];
+        } else {
+            proposal.votesAgainst += memberShares[msg.sender];
+        }
+
+        emit Voted(proposalId, msg.sender, support);
+    }
+
+    function executeProposal(uint256 proposalId) external {
+        Proposal storage proposal = proposals[proposalId];
+        require(!proposal.executed, "Already executed");
+        require(proposal.votesFor > proposal.votesAgainst, "Proposal not approved");
+
+        proposal.executed = true;
+        emit Executed(proposalId);
+    }
+
+    // ------------------------------
+    // Member Management
+    // ------------------------------
+    function addMember(address member, uint256 shares) external {
+        require(msg.sender == managerEntity, "Only Manager Entity can add");
+        memberShares[member] = shares;
+    }
+
+    function removeMember(address member) external {
+        require(msg.sender == managerEntity, "Only Manager Entity can remove");
+        memberShares[member] = 0;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+/// @title Royal Capital Holdings DAO Smart Contract
+/// @notice Governance contract aligned with Operating Agreement
+/// @dev Educational template for DAO LLC compliance
+
+contract RoyalCapitalHoldingsDAO {
+    // ------------------------------
+    // Core Governance Anchors
+    // ------------------------------
+    address public managerEntity;      // Royal Capital Holdings LLC
+    address public beneficiary;        // Royal International Ministry
+    uint256 public treasuryBalance;
+
+    mapping(address => uint256) public memberShares;
+
+    // ------------------------------
+    // Events
+    // ------------------------------
+    event Deposit(address indexed from, uint256 amount);
+    event ProposalCreated(uint256 proposalId, string description);
+    event Voted(uint256 proposalId, address indexed voter, bool support);
+    event Executed(uint256 proposalId);
+
+    // ------------------------------
+    // Constructor
+    // ------------------------------
+    constructor(address _managerEntity, address _beneficiary) {
+        managerEntity = _managerEntity;   // Royal Capital Holdings LLC
+        beneficiary = _beneficiary;       // Royal International Ministry
+    }
+
+    // ------------------------------
+    // Treasury Functions
+    // ------------------------------
+    function deposit() external payable {
+        treasuryBalance += msg.value;
+        emit Deposit(msg.sender, msg.value);
+    }
+
+    function allocateToBeneficiary(uint256 amount) external {
+        require(msg.sender == managerEntity, "Only Manager Entity can allocate");
+        require(amount <= treasuryBalance, "Insufficient balance");
+        treasuryBalance -= amount;
+        payable(beneficiary).transfer(amount);
+    }
+
+    // ------------------------------
+    // Governance Functions
+    // ------------------------------
+    struct Proposal {
+        uint256 id;
+        string description;
+        uint256 votesFor;
+        uint256 votesAgainst;
+        bool executed;
+    }
+
+    mapping(uint256 => Proposal) public proposals;
+    uint256 public nextProposalId;
+
+    function createProposal(string memory description) external {
+        proposals[nextProposalId] = Proposal({
+            id: nextProposalId,
+            description: description,
+            votesFor: 0,
+            votesAgainst: 0,
+            executed: false
+        });
+        emit ProposalCreated(nextProposalId, description);
+        nextProposalId++;
+    }
+
+    function vote(uint256 proposalId, bool support) external {
+        require(memberShares[msg.sender] > 0, "Not a member");
+        Proposal storage proposal = proposals[proposalId];
+        require(!proposal.executed, "Already executed");
+
+        if (support) {
+            proposal.votesFor += memberShares[msg.sender];
+        } else {
+            proposal.votesAgainst += memberShares[msg.sender];
+        }
+
+        emit Voted(proposalId, msg.sender, support);
+    }
+
+    function executeProposal(uint256 proposalId) external {
+        Proposal storage proposal = proposals[proposalId];
+        require(!proposal.executed, "Already executed");
+        require(proposal.votesFor > proposal.votesAgainst, "Proposal not approved");
+
+        proposal.executed = true;
+        emit Executed(proposalId);
+    }
+
+    // ------------------------------
+    // Member Management
+    // ------------------------------
+    function addMember(address member, uint256 shares) external {
+        require(msg.sender == managerEntity, "Only Manager Entity can add");
+        memberShares[member] = shares;
+    }
+
+    function removeMember(address member) external {
+        require(msg.sender == managerEntity, "Only Manager Entity can remove");
+        memberShares[member] = 0;
+    }
+}
+    }
+}
