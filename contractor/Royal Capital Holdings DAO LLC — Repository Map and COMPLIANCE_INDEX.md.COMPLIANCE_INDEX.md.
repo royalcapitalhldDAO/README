@@ -1,0 +1,42 @@
+Royal Capital Holdings DAO LLC — Repository Map and COMPLIANCE_INDEX.md.
+# Royal Capital Holdings DAO LLC — Repository Map
+
+**Governance Vessel:** ROYAL-CAPITAL-HOLDINGS-DAO-LLC (Private)
+
+- **contracts/**
+  - `ManagerField.sol` — Registry of core roles (DAO_MANAGER, COMPLIANCE_OFFICER, TREASURY).
+  - `PublicCompliance.sol` — On-chain mirror of COMPLIANCE_INDEX and POLICY_FOR_ISSUANCE.
+  - `RoyalCapitalDAOIdentifier.sol` — On-chain anchor linking repository, record-keeping, and compliance.
+  - `RoyalCapitalDAO.sol` — Executable governance contract for proposals, voting, and execution.
+- **scripts/**
+  - `deploy.js` — Hardhat deployment flow for ManagerField, PublicCompliance, Identifier, and RoyalCapitalDAO.
+- **hardhat.config.js` / `package.json`**
+  - Tooling, compilation, and network configuration.
+
+**Public Vessels:**
+
+- `README` (Public) — Public charter and high-level description.
+- `-Record-Keeping-Index` (Public) — Public audit trail of proposals, executions, and settlement acknowledgements.
+
+---
+
+## Tri-Ledger Settlement Architecture
+
+1. **GitHub Ledger (Authored Authority)**
+   - Files: `README.md`, `DAO_IDENTIFIER.md`, `COMPLIANCE_INDEX.md`, `POLICY_FOR_ISSUANCE.md`, `Record-Keeping Index`.
+   - Function: Human-readable governance, policy, and narrative authority.
+
+2. **EVM Ledger (Programmable Enforcement)**
+   - Contracts: `RoyalCapitalDAO`, `ManagerField`, `PublicCompliance`, `RoyalCapitalDAOIdentifier`.
+   - Function: Proposal lifecycle, voting, execution, and policy enforcement hooks.
+
+3. **XRP Ledger (External Financial Settlement)**
+   - Function: Final clearing of external value transfers and obligations.
+   - XRP transaction hashes are recorded in the Record-Keeping Index alongside EVM tx hashes and proposal IDs.
+
+This creates a closed, auditable loop:
+
+- Intent and policy → GitHub  
+- Governance and execution → EVM  
+- External settlement → XRP  
+- Full traceability → Record-Keeping Index
