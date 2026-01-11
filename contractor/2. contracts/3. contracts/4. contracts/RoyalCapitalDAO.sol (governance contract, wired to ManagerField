@@ -1,0 +1,207 @@
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.20;
+
+import "./ManagerField.sol";
+
+/// @title Royal Capital Holdings DAO LLC Governance Contract
+/// @notice Executable governance vessel for proposals, voting, and authorized execution.
+contract RoyalCapitalDAO {
+    ManagerField public managerField;
+
+    uint256 public proposalCount;
+
+    bytes32 public constant ROLE_DAO_MANAGER = keccak256("DAO_MANAGER");
+    bytes32 public constant ROLE_COMPLIANCE_OFFICER = keccak256("COMPLIANCE_OFFICER");
+    bytes32 public constant ROLE_TREASURY = keccak256("TREASURY");
+
+    enum ProposalType {
+        GENERAL,
+        ISSUANCE,
+        TREASURY,
+        PARAMETER,
+        SETTLEMENT
+    }
+
+    enum ProposalStatus {
+        ACTIVE,
+        EXECUTED,
+        CANCELLED
+    }
+
+    struct Proposal {
+        uint256 id;
+        address proposer;
+        ProposalType proposalType;
+        string referenceURI;
+        bytes callData;
+        address target;
+        uint256 startBlock;
+        uint256 endBlock;
+        uint256 forVotes;
+        uint256 againstVotes;
+        ProposalStatus status;
+    }
+
+    mapping(uint256 => Proposal) public proposals;
+    mapping(uint256 => mapping(address => bool)) public hasVoted;
+
+    event ProposalCreated(
+        uint256 indexed id,
+        address indexed proposer,
+        ProposalType proposalType,
+        string referenceURI
+    );
+    event VoteCast(
+        uint256 indexed id,
+        address indexed voter,
+        bool support,
+        uint256 weight
+    );
+    event ProposalExecuted(uint256 indexed id);
+    event ProposalCancelled(uint256 indexed id);
+
+    modifier onlyDaoManager() {
+        require(msg.sender == managerField.getRole(ROLE_DAO_MANAGER), "Not DAO_MANAGER");
+        _;
+    }
+
+    modifier onlyComplianceOfficer() {
+        require(msg.sender == managerField.getRole(ROLE_COMPLIANCE_OFFICER), "Not COMPLIANCE_OFFICER");
+        _;
+    }
+
+    constructor(address _managerField) {
+        managerField = ManagerField(_managerField);
+    }
+
+    function createProposal(
+        ProposalType _proposalType,
+        string calldata _referenceURI,
+        address _target,
+        bytes calldata _callData,
+        uint256 _votingPeriodBlocks
+    ) external returns (uint256) {
+        require(_votingPeriodBlocks > 0, "Invalid voting period");
+
+        uint256 id = ++proposalCount;
+
+        proposals[id] = Proposal({
+            id: id,
+            proposer: msg.sender,
+            proposalType: _proposalType,
+            referenceURI: _referenceURI,
+            callData: _callData,
+            target: _target,
+            startBlock: block.number,
+            endBlock: block.number + _votingPeriodBlocks,
+            forVotes: 0,
+            againstVotes: 0,
+            status: ProposalStatus.ACTIVE
+        });
+
+        emit ProposalCreated(id, msg.sender, _proposalType, _referenceURI);
+        return id;
+    }
+
+    // Voting weight: currently simple 1-address-1-vote.
+    // Later you can change this to a governance token or delegation system.
+    function _votingWeight(address voter) internal view returns (uint256) {
+        voter;
+        return 1;
+    }
+
+    function castVote(uint256 _proposalId, bool _support) external {
+        Proposal storage p = proposals[_proposalId];
+        require(block.number >= p.startBlock && block.number <= p.endBlock, "Voting closed");
+        require(p.status == ProposalStatus.ACTIVE, "Not active");
+        require(!hasVoted[_proposalId][msg.sender], "Already voted");
+
+        uint256 weight = _votingWeight(msg.sender);
+        require(weight > 0, "No voting weight");
+
+        hasVoted[_proposalId][msg.sender] = true;
+
+        if (_support) {
+            p.forVotes += weight;
+        } else {
+            p.againstVotes += weight;
+        }
+
+        emit VoteCast(_proposalId, msg.sender, _support, weight);
+    }
+
+    function executeProposal(uint256 _proposalId) external onlyDaoManager {
+        Proposal storage p = proposals[_proposalId];
+        require(p.status == ProposalStatus.ACTIVE, "Not active");
+        require(block.number > p.endBlock, "Voting not ended");
+        require(p.forVotes > p.againstVotes, "Not approved");
+
+        if (p.proposalType == ProposalType.ISSUANCE) {
+            _enforceIssuancePolicy(p);
+        } else if (p.proposalType == ProposalType.TREASURY) {
+            _enforceTreasuryPolicy(p);
+        } else if (p.proposalType == ProposalType.SETTLEMENT) {
+            _enforceSettlementPolicy(p);
+        }
+
+        (bool ok, ) = p.target.call(p.callData);
+        require(ok, "Call failed");
+
+        p.status = ProposalStatus.EXECUTED;
+        emit ProposalExecuted(_proposalId);
+    }
+
+    function cancelProposal(uint256 _proposalId) external onlyDaoManager {
+        Proposal storage p = proposals[_proposalId];
+        require(p.status == ProposalStatus.ACTIVE, "Not active");
+        p.status = ProposalStatus.CANCELLED;
+        emit ProposalCancelled(_proposalId);
+    }
+
+    // ===== POLICY ENFORCEMENT HOOKS =====
+
+    function _enforceIssuancePolicy(Proposal storage p) internal view {
+        require(
+            _containsPolicyTag(p.referenceURI, "POLICY_FOR_ISSUANCE"),
+            "Missing issuance policy reference"
+        );
+        // Later: enforce quantitative limits, allowed instruments, etc.
+    }
+
+    function _enforceTreasuryPolicy(Proposal storage p) internal view {
+        require(
+            _containsPolicyTag(p.referenceURI, "COMPLIANCE_INDEX_TREASURY"),
+            "Missing treasury compliance reference"
+        );
+        // Later: whitelisted targets, amount ceilings, counterparty rules.
+    }
+
+    function _enforceSettlementPolicy(Proposal storage p) internal view {
+        require(
+            _containsPolicyTag(p.referenceURI, "SETTLEMENT_INDEX"),
+            "Missing settlement index reference"
+        );
+        // Later: check alignment with XRP tx logs, oracle signals, etc.
+    }
+
+    function _containsPolicyTag(
+        string memory uri,
+        string memory tag
+    ) internal pure returns (bool) {
+        bytes memory u = bytes(uri);
+        bytes memory t = bytes(tag);
+        if (t.length == 0 || t.length > u.length) return false;
+
+        for (uint256 i = 0; i <= u.length - t.length; i++) {
+            bool matchFound = true;
+            for (uint256 j = 0; j < t.length; j++) {
+                if (u[i + j] != t[j]) {
+                    matchFound = false;
+                    break;
+                }
+            }
+            if (matchFound) return true;
+        }
+        return false;
+    }
+}
