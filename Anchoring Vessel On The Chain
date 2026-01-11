@@ -1,0 +1,56 @@
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.20;
+
+/// @title DAO Identifier for Royal Capital Holdings DAO LLC
+/// @notice Immutable on-chain identifier anchoring the DAO's public record.
+contract RoyalCapitalDAOIdentifier {
+    string public constant NAME = "Royal Capital Holdings DAO LLC";
+    string public constant PURPOSE =
+        "Authored governance vessel for collective decision-making, treasury management, and contract execution.";
+
+    /// @notice Canonical URI for the public governance repository.
+    string public repositoryURI;
+
+    /// @notice Canonical URI for the COMPLIANCE_INDEX and POLICY_FOR_ISSUANCE index.
+    string public complianceURI;
+
+    /// @notice Chain identifier and deployment block for anchoring in time and space.
+    uint256 public immutable chainId;
+    uint256 public immutable deployedAtBlock;
+    address public immutable deployedBy;
+
+    event RepositoryURIUpdated(string newURI);
+    event ComplianceURIUpdated(string newURI);
+
+    constructor(
+        string memory _repositoryURI,
+        string memory _complianceURI
+    ) {
+        repositoryURI = _repositoryURI;
+        complianceURI = _complianceURI;
+        deployedAtBlock = block.number;
+        deployedBy = msg.sender;
+
+        uint256 id;
+        assembly {
+            id := chainid()
+        }
+        chainId = id;
+    }
+
+    /// @notice Optionally allow a one-way "finalization" by the daoManager later,
+    /// or keep this immutable if you prefer pure anchor semantics.
+
+    function updateRepositoryURI(string calldata _newURI) external {
+        // You can restrict this to daoManager once RoyalCapitalDAO is deployed.
+        require(msg.sender == deployedBy, "Not authorized");
+        repositoryURI = _newURI;
+        emit RepositoryURIUpdated(_newURI);
+    }
+
+    function updateComplianceURI(string calldata _newURI) external {
+        require(msg.sender == deployedBy, "Not authorized");
+        complianceURI = _newURI;
+        emit ComplianceURIUpdated(_newURI);
+    }
+}
