@@ -1,0 +1,80 @@
+// scripts/deploy.js
+const hre = require("hardhat");
+
+async function main() {
+  const [deployer] = await hre.ethers.getSigners();
+  console.log("Deploying with:", deployer.address);
+
+  // 1. Deploy ManagerField
+  const ManagerField = await hre.ethers.getContractFactory("ManagerField");
+  const managerField = await ManagerField.deploy(deployer.address);
+  await managerField.deployed();
+  console.log("ManagerField deployed to:", managerField.address);
+
+  // 2. Set initial roles (for now, all to deployer; you can later reassign)
+  const ROLE_DAO_MANAGER = hre.ethers.utils.keccak256(
+    hre.ethers.utils.toUtf8Bytes("DAO_MANAGER")
+  );
+  const ROLE_COMPLIANCE_OFFICER = hre.ethers.utils.keccak256(
+    hre.ethers.utils.toUtf8Bytes("COMPLIANCE_OFFICER")
+  );
+  const ROLE_TREASURY = hre.ethers.utils.keccak256(
+    hre.ethers.utils.toUtf8Bytes("TREASURY")
+  );
+
+  await (await managerField.setRole(ROLE_DAO_MANAGER, deployer.address)).wait();
+  await (await managerField.setRole(ROLE_COMPLIANCE_OFFICER, deployer.address)).wait();
+  await (await managerField.setRole(ROLE_TREASURY, deployer.address)).wait();
+
+  console.log("Initial roles set to deployer.");
+
+  // 3. Deploy PublicCompliance
+  const complianceIndexURI =
+    "https://github.com/royalcapitalhldDAO/ROYAL-CAPITAL-HOLDINGS-DAO-LLC/blob/main/COMPLIANCE_INDEX.md";
+  const policyForIssuanceURI =
+    "https://github.com/royalcapitalhldDAO/ROYAL-CAPITAL-HOLDINGS-DAO-LLC/blob/main/POLICY_FOR_ISSUANCE.md";
+  const settlementIndexURI =
+    "https://github.com/royalcapitalhldDAO/-Record-Keeping-Index";
+
+  const PublicCompliance = await hre.ethers.getContractFactory("PublicCompliance");
+  const publicCompliance = await PublicCompliance.deploy(
+    deployer.address,
+    complianceIndexURI,
+    policyForIssuanceURI,
+    settlementIndexURI
+  );
+  await publicCompliance.deployed();
+  console.log("PublicCompliance deployed to:", publicCompliance.address);
+
+  // 4. Deploy RoyalCapitalDAOIdentifier
+  const repositoryURI =
+    "https://github.com/royalcapitalhldDAO/ROYAL-CAPITAL-HOLDINGS-DAO-LLC";
+  const recordKeepingIndexURI =
+    "https://github.com/royalcapitalhldDAO/-Record-Keeping-Index";
+
+  const Identifier = await hre.ethers.getContractFactory(
+    "RoyalCapitalDAOIdentifier"
+  );
+  const identifier = await Identifier.deploy(
+    repositoryURI,
+    recordKeepingIndexURI,
+    complianceIndexURI
+  );
+  await identifier.deployed();
+  console.log("RoyalCapitalDAOIdentifier deployed to:", identifier.address);
+
+  // 5. Deploy RoyalCapitalDAO
+  const RoyalCapitalDAO = await hre.ethers.getContractFactory("RoyalCapitalDAO");
+  const dao = await RoyalCapitalDAO.deploy(managerField.address);
+  await dao.deployed();
+  console.log("RoyalCapitalDAO deployed to:", dao.address);
+
+  console.log("Deployment complete.");
+}
+
+main()
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });
