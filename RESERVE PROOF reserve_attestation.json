@@ -1,0 +1,8 @@
+RESERVE PROOF REQUIREMENT
+reserve_attestation.json
+if (tx_type == PAYMENT && is_mint) {
+    if (!tx_memo_hash_matches()) {
+        rollback("Missing or invalid reserve proof");
+    }
+}
+accept();
