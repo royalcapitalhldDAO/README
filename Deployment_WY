@@ -1,0 +1,34 @@
+Deployment_WY/
+│
+├── WYOMING_DAO_IDENTIFIER.md
+├── CONTRACT_SOURCE_HASH.txt
+├── DEPLOYMENT_RECEIPT.json
+├── CONTRACT_ADDRESS.txt
+├── ABI.json
+├── DEPLOYMENT_PARAMETERS.json
+├── VERIFICATION_INSTRUCTIONS.md
+├── README.md
+│
+├── architecture/
+│   ├── ARCHITECTURE_OVERVIEW.md
+│   ├── SYSTEM_BOUNDARIES.md
+│   └── GOVERNANCE_LIMITS.md
+│
+├── scripts/
+│   └── deploy_wyoming.js
+│
+├── records/
+│   └── deployment_log.md
+│
+├── verification/
+│   ├── bytecode.txt
+│   └── metadata.json
+│
+├── legal/
+│   └── WYOMING_LINKAGE_STATEMENT.md
+│
+├── public_notice/
+│   └── PUBLIC_NOTICE_OF_DEPLOYMENT.md
+│
+└── checksums/
+    └── sha256_checksums.txt
