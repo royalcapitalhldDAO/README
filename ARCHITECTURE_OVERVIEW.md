@@ -315,6 +315,11 @@ Detailed rules, constraints, and authorities live in:
 - the XRPL issuer configuration  
 
 This file is a quiet structural map — not promotional, not interpretive, simply factual.
+hese three files form the public structural map of Royal Capital Holdings DAO LLC.
+They are not promotional.
+They are not interpretive.
+They are not narrative.
+They are factual, architectural, and protective.
 
 ---
 
